@@ -119,7 +119,7 @@ const Card = ({ plan, onOpen, isFavorite, toggleFavorite }: { plan: PlanData, on
 
 // --- Main Page ---
 
-const DashboardPage: React.FC = () => {
+export const DashboardPage: React.FC = () => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     return localStorage.getItem('theme') as 'light' | 'dark' || 'light';
   });
@@ -487,5 +487,3 @@ const DashboardPage: React.FC = () => {
     </div>
   );
 };
-
-export default DashboardPage;
