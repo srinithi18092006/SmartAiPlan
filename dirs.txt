@@ -1,4 +1,0 @@
-﻿backend
-guidelines
-node_modules
-recovered_frontend
