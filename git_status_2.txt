@@ -1,0 +1,28 @@
+﻿On branch main
+Your branch and 'origin/main' have diverged,
+and have 1 and 2 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   package-lock.json
+	deleted:    recovered_frontend/README.md
+	deleted:    recovered_frontend/default_shadcn_theme.css
+	deleted:    recovered_frontend/index.html
+	deleted:    recovered_frontend/package-lock.json
+	deleted:    recovered_frontend/package.json
+	deleted:    recovered_frontend/postcss.config.mjs
+	deleted:    recovered_frontend/vite.config.ts
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	README.md
+	default_shadcn_theme.css
+	git_status.txt
+	index.html
+	package.json
+	postcss.config.mjs
+	vite.config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
