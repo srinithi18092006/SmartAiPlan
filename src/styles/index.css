@@ -2,72 +2,110 @@
 
 @layer base {
   :root {
+    --background: 240 10% 98%;
+    --foreground: 240 10% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 4%;
+    --primary: 262 83% 58%; /* Purple */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 199 89% 48%; /* Blue */
+    --secondary-foreground: 210 40% 98%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 322 81% 55%; /* Pink */
+    --accent-foreground: 240 5.9% 10%;
+    --gold: 43 100% 50%; /* Gold */
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 262 83% 58%;
+    --radius: 1rem;
+  }
+
+  .dark {
     --background: 240 10% 4%;
     --foreground: 0 0% 98%;
     --card: 240 10% 4%;
     --card-foreground: 0 0% 98%;
-    --popover: 240 10% 4%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 199 100% 50%; /* Neon Blue */
-    --primary-foreground: 0 0% 9%;
-    --secondary: 282 100% 50%; /* Neon Purple */
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 199 100% 50%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 199 100% 50%;
-    --radius: 0.75rem;
+    --primary: 262 83% 58%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 199 89% 48%;
   }
 }
 
 @layer utilities {
   .glass {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.15)];
+  }
+
+  .glass-dark {
     @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
   }
   
   .glass-card {
-    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all duration-300;
+    @apply bg-white/60 dark:bg-black/40 backdrop-blur-lg border border-white/40 dark:border-white/10 rounded-3xl transition-all duration-500 shadow-xl overflow-hidden;
   }
 
-  .neon-glow-blue {
-    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), 0 0 30px rgba(0, 210, 255, 0.2);
+  .neon-glow-primary {
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 0 40px rgba(139, 92, 246, 0.2);
   }
 
-  .neon-glow-purple {
-    box-shadow: 0 0 15px rgba(157, 80, 187, 0.4), 0 0 30px rgba(157, 80, 187, 0.2);
+  .neon-glow-secondary {
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4), 0 0 40px rgba(14, 165, 233, 0.2);
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00d2ff] to-[#9d50bb];
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500;
   }
 
-  .bg-mesh {
-    background-color: #050505;
+  .bg-premium {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient-anim 15s ease infinite;
+  }
+
+  .bg-colorful-mesh {
+    background-color: #ffffff;
     background-image: 
-      radial-gradient(at 0% 0%, hsla(199,100%,50%,0.15) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, hsla(282,100%,50%,0.1) 0, transparent 50%),
-      radial-gradient(at 100% 0%, hsla(199,100%,50%,0.15) 0, transparent 50%);
+      radial-gradient(at 0% 0%, hsla(262,83%,58%,0.15) 0, transparent 50%), 
+      radial-gradient(at 50% 100%, hsla(322,81%,55%,0.1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(199,89%,48%,0.15) 0, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(43,100%,50%,0.05) 0, transparent 40%);
+  }
+
+  @keyframes gradient-anim {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
   }
 }
 
 body {
-  @apply bg-[#050505] text-white font-sans antialiased;
-  background-attachment: fixed;
+  @apply bg-colorful-mesh text-slate-900 font-sans antialiased min-h-screen;
+}
+
+.dark body {
+  @apply bg-slate-950 text-white;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-black;
+  @apply bg-slate-100 dark:bg-slate-900;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-white/10 rounded-full hover:bg-white/20;
+  @apply bg-slate-300 dark:bg-purple-900/30 rounded-full hover:bg-slate-400 dark:hover:bg-purple-900/50;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
 }
