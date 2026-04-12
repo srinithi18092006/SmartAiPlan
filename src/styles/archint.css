@@ -1,0 +1,581 @@
+/* ============================
+   ARCHINT - Custom Design System
+   Dark Neon / Glassmorphism Theme
+   ============================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+
+/* ── Root Variables ── */
+:root {
+  --arch-bg-deep: #020510;
+  --arch-bg-dark: #050a18;
+  --arch-bg-card: rgba(10, 20, 50, 0.6);
+  --arch-bg-card-hover: rgba(15, 30, 70, 0.85);
+
+  --arch-neon-blue: #00d4ff;
+  --arch-neon-purple: #a855f7;
+  --arch-neon-pink: #ec4899;
+  --arch-neon-cyan: #06b6d4;
+  --arch-neon-violet: #8b5cf6;
+
+  --arch-glow-blue: 0 0 20px rgba(0, 212, 255, 0.4), 0 0 60px rgba(0, 212, 255, 0.15);
+  --arch-glow-purple: 0 0 20px rgba(168, 85, 247, 0.4), 0 0 60px rgba(168, 85, 247, 0.15);
+  --arch-glow-pink: 0 0 20px rgba(236, 72, 153, 0.4), 0 0 60px rgba(236, 72, 153, 0.15);
+
+  --arch-border-glass: rgba(255, 255, 255, 0.08);
+  --arch-border-glow: rgba(0, 212, 255, 0.3);
+
+  --arch-text-primary: #f0f4ff;
+  --arch-text-secondary: #94a3b8;
+  --arch-text-muted: #475569;
+
+  --arch-gradient-primary: linear-gradient(135deg, #00d4ff 0%, #a855f7 100%);
+  --arch-gradient-hero: linear-gradient(135deg, #020510 0%, #0a0f2e 50%, #0d0524 100%);
+  --arch-gradient-card: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(168, 85, 247, 0.05));
+
+  --arch-radius-sm: 8px;
+  --arch-radius-md: 12px;
+  --arch-radius-lg: 16px;
+  --arch-radius-xl: 24px;
+}
+
+/* ── Global Reset for Archint ── */
+.archint-app {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  background: var(--arch-bg-deep);
+  color: var(--arch-text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Animated Background Grid ── */
+.arch-bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Glow Orbs ── */
+.arch-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+  animation: archOrbFloat 8s ease-in-out infinite alternate;
+}
+
+.arch-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #00d4ff, transparent 70%);
+  top: -200px;
+  left: -200px;
+  animation-delay: 0s;
+}
+
+.arch-orb-2 {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #a855f7, transparent 70%);
+  bottom: -200px;
+  right: -200px;
+  animation-delay: -3s;
+}
+
+.arch-orb-3 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, #ec4899, transparent 70%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -6s;
+}
+
+@keyframes archOrbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, -30px) scale(1.1); }
+}
+
+/* ── Glass Card ── */
+.arch-glass {
+  background: var(--arch-bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--arch-border-glass);
+  border-radius: var(--arch-radius-lg);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.arch-glass:hover {
+  background: var(--arch-bg-card-hover);
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow: var(--arch-glow-blue);
+}
+
+.arch-glass-strong {
+  background: rgba(5, 15, 40, 0.85);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--arch-radius-xl);
+}
+
+/* ── Gradient Text ── */
+.arch-gradient-text {
+  background: var(--arch-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.arch-gradient-text-purple {
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Neon Buttons ── */
+.arch-btn-primary {
+  background: var(--arch-gradient-primary);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+  border-radius: var(--arch-radius-md);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.arch-btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.arch-btn-primary:hover::before {
+  opacity: 1;
+}
+
+.arch-btn-primary:hover {
+  box-shadow: var(--arch-glow-blue);
+  transform: translateY(-2px);
+}
+
+.arch-btn-primary:active {
+  transform: translateY(0);
+}
+
+.arch-btn-ghost {
+  background: transparent;
+  color: var(--arch-neon-blue);
+  border: 1px solid var(--arch-neon-blue);
+  border-radius: var(--arch-radius-md);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.arch-btn-ghost:hover {
+  background: rgba(0, 212, 255, 0.1);
+  box-shadow: var(--arch-glow-blue);
+  transform: translateY(-2px);
+}
+
+/* ── Input Fields ── */
+.arch-input {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--arch-text-primary);
+  border-radius: var(--arch-radius-md);
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+  width: 100%;
+  outline: none;
+}
+
+.arch-input::placeholder {
+  color: var(--arch-text-muted);
+}
+
+.arch-input:focus {
+  border-color: var(--arch-neon-blue);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1), var(--arch-glow-blue);
+  background: rgba(0, 212, 255, 0.04);
+}
+
+/* ── Neon Tags / Badges ── */
+.arch-tag-best {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(0, 212, 255, 0.05));
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  color: var(--arch-neon-blue);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.arch-tag-recommended {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(168, 85, 247, 0.05));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: var(--arch-neon-purple);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.arch-tag-trending {
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(236, 72, 153, 0.05));
+  border: 1px solid rgba(236, 72, 153, 0.4);
+  color: var(--arch-neon-pink);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.arch-tag-saved {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 20px;
+  padding: 3px 10px;
+}
+
+/* ── Slider ── */
+.arch-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+  cursor: pointer;
+}
+
+.arch-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--arch-gradient-primary);
+  cursor: pointer;
+  box-shadow: var(--arch-glow-blue);
+  transition: transform 0.2s;
+}
+
+.arch-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* ── Toggle Switch ── */
+.arch-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.arch-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.arch-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  transition: all 0.3s ease;
+}
+
+.arch-toggle-slider::before {
+  content: '';
+  position: absolute;
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.5);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.arch-toggle input:checked + .arch-toggle-slider {
+  background: linear-gradient(135deg, #00d4ff, #a855f7);
+  border-color: rgba(0, 212, 255, 0.5);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+}
+
+.arch-toggle input:checked + .arch-toggle-slider::before {
+  transform: translate(20px, -50%);
+  background: #fff;
+}
+
+/* ── Select Dropdown ── */
+.arch-select {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--arch-text-primary);
+  border-radius: var(--arch-radius-md);
+  outline: none;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px !important;
+}
+
+.arch-select:focus {
+  border-color: var(--arch-neon-blue);
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+.arch-select option {
+  background: #0a1428;
+  color: #f0f4ff;
+}
+
+/* ── Navbar ── */
+.arch-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 64px;
+  background: rgba(2, 5, 16, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
+.arch-logo {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: var(--arch-gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+/* ── Design Cards ── */
+.arch-design-card {
+  background: var(--arch-bg-card);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--arch-border-glass);
+  border-radius: var(--arch-radius-lg);
+  overflow: hidden;
+  transition: all 0.35s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.arch-design-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(0, 212, 255, 0.25);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), var(--arch-glow-blue);
+}
+
+.arch-design-card .arch-card-image-wrap {
+  overflow: hidden;
+  position: relative;
+}
+
+.arch-design-card .arch-card-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.arch-design-card:hover .arch-card-image-wrap img {
+  transform: scale(1.08);
+}
+
+/* ── Neon Divider ── */
+.arch-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.3), rgba(168, 85, 247, 0.3), transparent);
+}
+
+/* ── Scrollbar ── */
+.archint-app ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.archint-app ::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+.archint-app ::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00d4ff, #a855f7);
+  border-radius: 3px;
+}
+
+/* ── Animations ── */
+@keyframes archFadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes archFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes archSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes archPulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.6), 0 0 80px rgba(0, 212, 255, 0.2); }
+}
+
+@keyframes archShine {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.arch-animate-fade-up {
+  animation: archFadeInUp 0.6s ease forwards;
+}
+
+.arch-animate-fade-in {
+  animation: archFadeIn 0.5s ease forwards;
+}
+
+.arch-animate-pulse-glow {
+  animation: archPulseGlow 2.5s ease-in-out infinite;
+}
+
+/* ── Delay utilities ── */
+.arch-delay-100 { animation-delay: 0.1s; }
+.arch-delay-200 { animation-delay: 0.2s; }
+.arch-delay-300 { animation-delay: 0.3s; }
+.arch-delay-400 { animation-delay: 0.4s; }
+.arch-delay-500 { animation-delay: 0.5s; }
+
+/* ── Floor selector pills ── */
+.arch-floor-pill {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--arch-text-secondary);
+  border-radius: 20px;
+  padding: 8px 18px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.25s ease;
+  font-family: 'Outfit', sans-serif;
+}
+
+.arch-floor-pill:hover {
+  border-color: rgba(0, 212, 255, 0.4);
+  color: var(--arch-neon-blue);
+}
+
+.arch-floor-pill.active {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(168, 85, 247, 0.15));
+  border-color: var(--arch-neon-blue);
+  color: var(--arch-neon-blue);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.2);
+}
+
+/* ── Save Heart Button ── */
+.arch-save-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(5, 10, 25, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 10;
+  color: var(--arch-text-secondary);
+  font-size: 16px;
+}
+
+.arch-save-btn:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+  color: var(--arch-neon-pink);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+}
+
+.arch-save-btn.saved {
+  color: var(--arch-neon-pink);
+  border-color: rgba(236, 72, 153, 0.5);
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.3);
+}
+
+/* ── Progress / Range track fill ── */
+.arch-range-fill {
+  height: 4px;
+  background: var(--arch-gradient-primary);
+  border-radius: 2px;
+}
+
+/* ── Loading spinner ── */
+@keyframes archSpin {
+  to { transform: rotate(360deg); }
+}
+
+.arch-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255,255,255,0.1);
+  border-top-color: var(--arch-neon-blue);
+  border-radius: 50%;
+  animation: archSpin 0.8s linear infinite;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .arch-navbar {
+    padding: 0 16px;
+  }
+}
