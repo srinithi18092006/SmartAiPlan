@@ -82,7 +82,13 @@
 }
 
 body {
-  @apply bg-colorful-mesh text-slate-900 font-sans antialiased min-h-screen;
+  background-color: #ffffff;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(262,83%,58%,0.15) 0, transparent 50%), 
+    radial-gradient(at 50% 100%, hsla(322,81%,55%,0.1) 0, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(199,89%,48%,0.15) 0, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(43,100%,50%,0.05) 0, transparent 40%);
+  @apply text-slate-900 font-sans antialiased min-h-screen;
 }
 
 .dark body {
