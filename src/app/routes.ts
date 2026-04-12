@@ -1,24 +1,25 @@
+
 import { createBrowserRouter } from "react-router";
-import { LandingPage } from "./components/LandingPage";
-import { LoginPage } from "./components/LoginPage";
-import { SignUpPage } from "./components/SignUpPage";
-import { DashboardPage } from "./components/DashboardPage";
+import { LoginPage } from "./pages/LoginPage";
+import { HomePage } from "./pages/HomePage";
+import { SelectionPage } from "./pages/SelectionPage";
+import { ResultsPage } from "./pages/ResultsPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: LandingPage,
-  },
-  {
-    path: "/login",
     Component: LoginPage,
   },
   {
-    path: "/signup",
-    Component: SignUpPage,
+    path: "/home",
+    Component: HomePage,
   },
   {
-    path: "/dashboard",
-    Component: DashboardPage,
+    path: "/selection/:type",
+    Component: SelectionPage,
   },
+  {
+    path: "/results",
+    Component: ResultsPage,
+  }
 ]);

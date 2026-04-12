@@ -1,3 +1,73 @@
-@import './fonts.css';
-@import './tailwind.css';
-@import './theme.css';
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 240 10% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 4%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 199 100% 50%; /* Neon Blue */
+    --primary-foreground: 0 0% 9%;
+    --secondary: 282 100% 50%; /* Neon Purple */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 199 100% 50%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 199 100% 50%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.37)];
+  }
+  
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl transition-all duration-300;
+  }
+
+  .neon-glow-blue {
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4), 0 0 30px rgba(0, 210, 255, 0.2);
+  }
+
+  .neon-glow-purple {
+    box-shadow: 0 0 15px rgba(157, 80, 187, 0.4), 0 0 30px rgba(157, 80, 187, 0.2);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#00d2ff] to-[#9d50bb];
+  }
+
+  .bg-mesh {
+    background-color: #050505;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(199,100%,50%,0.15) 0, transparent 50%), 
+      radial-gradient(at 50% 0%, hsla(282,100%,50%,0.1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(199,100%,50%,0.15) 0, transparent 50%);
+  }
+}
+
+body {
+  @apply bg-[#050505] text-white font-sans antialiased;
+  background-attachment: fixed;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-white/10 rounded-full hover:bg-white/20;
+}
