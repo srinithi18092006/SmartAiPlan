@@ -1,84 +1,64 @@
 
-import React, { useState } from 'react';
-import { GlassCard, PremiumButton } from '../components/UI';
-import { useAuth } from '../context/AuthContext';
+import React from 'react';
+import { motion } from 'motion/react';
+import { GlassCard, NeonButton, InputBox } from '../components/UI';
 import { useNavigate } from 'react-router';
-import { Mail, Lock, UserPlus } from 'lucide-react';
+import { Mail, Lock, Building } from 'lucide-react';
 
 export const LoginPage: React.FC = () => {
-  const [isRegister, setIsRegister] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
-  const [error, setError] = useState('');
-  
-  const { login, register } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-    try {
-      if (isRegister) {
-        await register(name, email, password);
-      } else {
-        await login(email, password);
-      }
-      navigate('/home');
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Authentication failed');
-    }
-  };
-
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-blue-mesh">
-      <GlassCard className="max-w-md w-full border-blue-600/20 bg-white/90 dark:bg-slate-900/40">
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 text-yellow-400 font-black text-4xl shadow-xl shadow-blue-500/30">A</div>
-          <h1 className="text-4xl font-black italic tracking-tighter mb-2">ARCH<span className="text-blue-600">INT</span></h1>
-          <p className="text-muted-foreground">{isRegister ? 'Join the future of design' : 'Sign in to your design vault'}</p>
-        </div>
-
-        {error && <div className="p-3 mb-6 bg-red-500/10 border border-red-500/20 text-red-500 text-sm rounded-xl text-center font-bold">{error}</div>}
-
-        <form className="space-y-5" onSubmit={handleSubmit}>
-          {isRegister && (
-            <div className="relative">
-              <input 
-                type="text" placeholder="Full Name" required
-                value={name} onChange={(e) => setName(e.target.value)}
-                className="w-full h-14 bg-background border-2 border-slate-100 dark:border-slate-800 rounded-2xl px-5 focus:border-blue-500 focus:outline-none"
-              />
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-colorful-mesh p-6">
+      {/* Dynamic Background Circles */}
+      <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-400/20 blur-[120px] rounded-full animate-pulse" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-purple-400/20 blur-[120px] rounded-full animate-pulse opacity-70" />
+      
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="w-full max-w-lg relative z-10"
+      >
+        <GlassCard className="p-12 border-white/40 shadow-2xl relative overflow-hidden group">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-bl-full" />
+          
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-xl mb-6 group-hover:rotate-12 transition-transform duration-500">
+              <Building className="w-8 h-8 text-blue-600" />
             </div>
-          )}
-          <div className="relative">
-             <input 
-                type="email" placeholder="Email Address" required
-                value={email} onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-14 bg-background border-2 border-slate-100 dark:border-slate-800 rounded-2xl px-5 focus:border-blue-500 focus:outline-none"
-              />
-          </div>
-          <div className="relative">
-            <input 
-                type="password" placeholder="Password" required
-                value={password} onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-14 bg-background border-2 border-slate-100 dark:border-slate-800 rounded-2xl px-5 focus:border-blue-500 focus:outline-none"
-              />
+            <h1 className="text-5xl font-black text-gradient tracking-tighter mb-3">ARCHINT</h1>
+            <p className="text-slate-400 font-medium">Experience Architectural Brilliance with AI</p>
           </div>
 
-          <PremiumButton type="submit" variant="blue" className="w-full py-4 text-lg">
-            {isRegister ? 'CREATE ACCOUNT' : 'SECURE SIGN IN'}
-          </PremiumButton>
-
-          <button 
-            type="button" 
-            onClick={() => setIsRegister(!isRegister)}
-            className="w-full text-center text-sm font-bold text-blue-500 uppercase tracking-widest mt-4"
-          >
-            {isRegister ? 'Already have an account? Login' : 'Need an account? Register'}
-          </button>
-        </form>
-      </GlassCard>
+          <form className="space-y-8" onSubmit={(e) => { e.preventDefault(); navigate('/home'); }}>
+            <InputBox 
+              label="Email Address" 
+              placeholder="name@archint.ai" 
+              value="" 
+              onChange={() => {}} 
+              icon={<Mail className="w-5 h-5" />}
+            />
+            <InputBox 
+              label="Secure Password" 
+              type="password" 
+              placeholder="••••••••" 
+              value="" 
+              onChange={() => {}} 
+              icon={<Lock className="w-5 h-5" />}
+            />
+            
+            <div className="pt-4 space-y-4">
+              <NeonButton className="w-full py-5 text-lg" variant="blue">SIGN IN TO PLATFORM</NeonButton>
+              <NeonButton className="w-full py-4 text-sm" variant="outline">CREATE NEW ACCOUNT</NeonButton>
+            </div>
+            
+            <div className="text-center mt-8">
+              <span className="text-xs font-bold text-slate-300 uppercase tracking-widest">Global standard in AI Design</span>
+            </div>
+          </form>
+        </GlassCard>
+      </motion.div>
     </div>
   );
 };

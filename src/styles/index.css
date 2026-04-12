@@ -4,78 +4,74 @@
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 217 91% 60%; /* Blue */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 47 95% 55%; /* Yellow */
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 47 95% 55%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.75rem;
+    --primary: 221.2 83.2% 53.3%;
+    --secondary: 262.1 83.3% 57.8%;
+    --accent: 326.3 80% 50%;
+    --gold: 47.9 95.8% 53.1%;
+    --glass: rgba(255, 255, 255, 0.7);
+    --radius: 1rem;
   }
 
   .dark {
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 47 95% 55%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 47 95% 55%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
   }
 }
 
 @layer utilities {
-  .glass {
-    @apply bg-white/60 dark:bg-black/40 backdrop-blur-xl border border-white/40 dark:border-white/10 shadow-xl;
+  .glass-premium {
+    @apply bg-white/40 backdrop-blur-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(31,38,135,0.07)];
   }
   
-  .neon-blue {
-    box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+  .glass-dark {
+    @apply bg-gray-900/40 backdrop-blur-2xl border border-white/10 shadow-2xl;
   }
 
-  .neon-yellow {
-    box-shadow: 0 0 15px rgba(234, 179, 8, 0.4);
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500;
   }
 
-  .text-yellow-glow {
-    text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
-  }
-
-  .bg-blue-mesh {
-    background-color: #000;
+  .bg-colorful-mesh {
+    background-color: #ffffff;
     background-image: 
-      radial-gradient(at 0% 0%, hsla(217,91%,60%,0.2) 0, transparent 50%), 
-      radial-gradient(at 100% 100%, hsla(47,95%,55%,0.1) 0, transparent 50%);
+      radial-gradient(at 0% 0%, hsla(213,100%,70%,0.15) 0, transparent 50%), 
+      radial-gradient(at 100% 0%, hsla(266,100%,70%,0.15) 0, transparent 50%),
+      radial-gradient(at 50% 100%, hsla(326,100%,70%,0.1) 0, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(47,100%,70%,0.1) 0, transparent 50%);
+  }
+
+  .neon-border-blue {
+    @apply border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)];
+  }
+
+  .neon-border-purple {
+    @apply border-purple-500/50 shadow-[0_0_15px_rgba(168,85,247,0.3)];
+  }
+
+  .card-hover {
+    @apply transition-all duration-500 hover:scale-[1.02] hover:-translate-y-2 hover:shadow-2xl;
   }
 }
 
 body {
-  @apply bg-background text-foreground transition-colors duration-300 min-h-screen font-sans antialiased;
+  @apply bg-colorful-mesh text-slate-900 font-sans antialiased min-h-screen;
+  background-attachment: fixed;
 }
 
-.dark body {
-  @apply bg-[#020617];
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-slate-200 rounded-full hover:bg-slate-300;
 }

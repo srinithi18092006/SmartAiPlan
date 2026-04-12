@@ -1,87 +1,109 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { useTheme } from '../context/ThemeContext';
-import { Sun, Moon, LogOut } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { useNavigate } from 'react-router';
 
 interface GlassCardProps {
   children: React.ReactNode;
   className?: string;
+  hoverGlow?: boolean;
 }
 
-export const GlassCard: React.FC<GlassCardProps> = ({ children, className = '' }) => {
+export const GlassCard: React.FC<GlassCardProps> = ({ children, className = '', hoverGlow = false }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      className={`glass rounded-3xl p-8 ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={hoverGlow ? { scale: 1.02, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' } : {}}
+      className={`glass-premium p-6 rounded-3xl ${className}`}
     >
       {children}
     </motion.div>
   );
 };
 
-export const PremiumButton: React.FC<{
+export const NeonButton: React.FC<{
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  variant?: 'blue' | 'yellow' | 'outline';
-  type?: 'button' | 'submit';
-}> = ({ children, onClick, className = '', variant = 'blue', type = 'button' }) => {
-  const styles = {
-    blue: 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-500/30',
-    yellow: 'bg-yellow-400 text-slate-900 hover:bg-yellow-500 shadow-lg shadow-yellow-500/30',
-    outline: 'border-2 border-slate-200 dark:border-slate-700 text-foreground hover:border-blue-500',
+  variant?: 'blue' | 'purple' | 'gold' | 'outline';
+}> = ({ children, onClick, className = '', variant = 'blue' }) => {
+  const variants = {
+    blue: 'bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-lg shadow-blue-500/30',
+    purple: 'bg-gradient-to-r from-purple-600 to-pink-500 text-white shadow-lg shadow-purple-500/30',
+    gold: 'bg-gradient-to-r from-yellow-500 to-amber-600 text-white shadow-lg shadow-amber-500/30',
+    outline: 'border-2 border-slate-200 text-slate-600 hover:border-blue-500 hover:text-blue-500',
   };
 
   return (
     <motion.button
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ y: -2 }}
       whileTap={{ scale: 0.98 }}
-      type={type}
       onClick={onClick}
-      className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 ${styles[variant]} ${className}`}
+      className={`px-8 py-3 rounded-2xl font-bold tracking-tight transition-all duration-300 ${variants[variant]} ${className}`}
     >
       {children}
     </motion.button>
   );
 };
 
-export const Navbar: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-
+export const InputBox: React.FC<{
+  label: string;
+  placeholder?: string;
+  value: string | number;
+  onChange: (val: string) => void;
+  type?: string;
+  icon?: React.ReactNode;
+}> = ({ label, placeholder, value, onChange, type = 'text', icon }) => {
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 px-8 py-4 flex justify-between items-center bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/home')}>
-        <div className="w-10 h-10 bg-blue-600 flex items-center justify-center rounded-xl text-yellow-400 font-black text-2xl shadow-lg shadow-blue-500/20">A</div>
-        <div className="text-2xl font-black italic tracking-tighter">
-          ARCH<span className="text-blue-600">INT</span>
-        </div>
+    <div className="space-y-2">
+      <label className="text-sm font-bold text-slate-500 uppercase tracking-widest ml-1">{label}</label>
+      <div className="relative">
+        {icon && <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">{icon}</div>}
+        <input
+          type={type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className={`w-full bg-white/50 border-2 border-slate-100 rounded-2xl ${icon ? 'pl-12' : 'px-6'} py-4 focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all text-slate-800 placeholder:text-slate-300 font-medium`}
+        />
       </div>
-      
-      <div className="flex items-center gap-6">
-        <button 
-          onClick={toggleTheme}
-          className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-yellow-500 dark:text-blue-400 hover:scale-110 transition-transform"
-        >
-          {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
-        </button>
-        
-        {user ? (
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-bold text-slate-500">{user.name}</span>
-            <button onClick={logout} className="p-2 text-slate-400 hover:text-red-500 transition-colors">
-              <LogOut size={20} />
-            </button>
-          </div>
-        ) : (
-          <PremiumButton variant="yellow" className="py-2 text-xs" onClick={() => navigate('/')}>LOGIN</PremiumButton>
-        )}
+    </div>
+  );
+};
+
+export const SelectableButton: React.FC<{
+  label: string;
+  selected: boolean;
+  onClick: () => void;
+  className?: string;
+}> = ({ label, selected, onClick, className = '' }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-6 py-4 rounded-2xl border-2 font-bold transition-all duration-300 ${
+        selected 
+          ? 'bg-blue-600 border-blue-600 text-white shadow-lg shadow-blue-500/20' 
+          : 'bg-white/50 border-slate-100 text-slate-500 hover:border-blue-300'
+      } ${className}`}
+    >
+      {label}
+    </button>
+  );
+};
+
+export const Navbar: React.FC = () => {
+  return (
+    <nav className="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center backdrop-blur-xl bg-white/30 border-b border-white/20">
+      <div className="text-2xl font-black tracking-tighter text-gradient flex items-center gap-2">
+        <div className="w-8 h-8 bg-gradient-to-tr from-blue-600 to-purple-500 rounded-lg" />
+        ARCHINT
       </div>
+      <div className="hidden md:flex gap-10 text-sm font-bold text-slate-400">
+        <a href="#" className="hover:text-blue-600 transition-colors uppercase tracking-widest">Plans</a>
+        <a href="#" className="hover:text-blue-600 transition-colors uppercase tracking-widest">Solutions</a>
+        <a href="#" className="hover:text-blue-600 transition-colors uppercase tracking-widest">Vision</a>
+      </div>
+      <NeonButton variant="blue" className="py-2.5 px-6 text-xs uppercase tracking-widest shadow-none">Sign Out</NeonButton>
     </nav>
   );
 };

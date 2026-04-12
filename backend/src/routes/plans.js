@@ -1,60 +1,41 @@
-
 const express = require('express');
 const router = express.Router();
-const Design = require('../models/Design');
+const Plan = require('../models/Plan');
+const jwt = require('jsonwebtoken');
 
-// GET /api/plans
-router.get('/', async (req, res) => {
+// Middleware to protect routes
+const auth = async (req, res, next) => {
   try {
-    const { 
-      type,
-      floors, 
-      minSqft, maxSqft, 
-      minBudget, maxBudget, 
-      style, 
-      garden, balcony, parking, freeSpace 
-    } = req.query;
+    const token = req.header('Authorization').replace('Bearer ', '');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.id;
+    next();
+  } catch (e) {
+    res.status(401).json({ message: 'Please authenticate.' });
+  }
+};
 
-    let query = {};
+// Create a new plan
+router.post('/', auth, async (req, res) => {
+  try {
+    const plan = new Plan({
+      ...req.body,
+      userId: req.userId
+    });
+    await plan.save();
+    res.status(201).json(plan);
+  } catch (err) {
+    res.status(400).json({ message: 'Error creating plan', error: err.message });
+  }
+});
 
-    if (type) query.type = type;
-    
-    // Strict match floors
-    if (floors) {
-      if (floors === '3+') {
-        query.floors = { $gte: 3 };
-      } else {
-        query.floors = parseInt(floors);
-      }
-    }
-
-    // Range sqft
-    if (minSqft || maxSqft) {
-      query.sqft = {};
-      if (minSqft) query.sqft.$gte = parseInt(minSqft);
-      if (maxSqft) query.sqft.$lte = parseInt(maxSqft);
-    }
-
-    // Range budget
-    if (minBudget || maxBudget) {
-      query.budget = {};
-      if (minBudget) query.budget.$gte = parseInt(minBudget);
-      if (maxBudget) query.budget.$lte = parseInt(maxBudget);
-    }
-
-    // Strict match style
-    if (style) query.style = style;
-
-    // Advanced options - if 'true' passed, item must have it
-    if (garden === 'true') query.garden = true;
-    if (balcony === 'true') query.balcony = true;
-    if (parking === 'true') query.parking = true;
-    if (freeSpace === 'true') query.freeSpace = true;
-
-    const designs = await Design.find(query).limit(100);
-    res.json(designs);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+// Get all plans for the logged-in user
+router.get('/', auth, async (req, res) => {
+  try {
+    const plans = await Plan.find({ userId: req.userId }).sort({ createdAt: -1 });
+    res.json(plans);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error', error: err.message });
   }
 });
 
