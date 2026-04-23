@@ -44,6 +44,8 @@ export function ArchintLoginPage() {
       }
       if (success) {
         navigate('/archint');
+      } else {
+        setError(mode === 'login' ? 'Invalid credentials. Please try again.' : 'Registration failed. User might already exist.');
       }
     } catch {
       setError('Something went wrong. Please try again.');

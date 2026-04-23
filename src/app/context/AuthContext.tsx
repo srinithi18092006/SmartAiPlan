@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import axios from 'axios';
 
 interface User {
   email: string;
@@ -15,6 +16,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
+const API_URL = `${import.meta.env.VITE_API_URL}/auth`;
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(() => {
     try {
@@ -25,29 +28,40 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   });
 
-  const login = useCallback(async (email: string, _password: string): Promise<boolean> => {
-    // Simulate async API call
-    await new Promise((r) => setTimeout(r, 800));
-    const mockUser: User = {
-      email,
-      name: email.split('@')[0].replace(/[._]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
-    };
-    setUser(mockUser);
-    localStorage.setItem('archint_user', JSON.stringify(mockUser));
-    return true;
+  const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+    try {
+      const response = await axios.post(`${API_URL}/login`, { email, password });
+      const { token, user: userData } = response.data;
+      
+      setUser(userData);
+      localStorage.setItem('archint_token', token);
+      localStorage.setItem('archint_user', JSON.stringify(userData));
+      return true;
+    } catch (error) {
+      console.error('Login Error:', error);
+      return false;
+    }
   }, []);
 
-  const register = useCallback(async (email: string, _password: string, name: string): Promise<boolean> => {
-    await new Promise((r) => setTimeout(r, 900));
-    const mockUser: User = { email, name };
-    setUser(mockUser);
-    localStorage.setItem('archint_user', JSON.stringify(mockUser));
-    return true;
+  const register = useCallback(async (email: string, password: string, name: string): Promise<boolean> => {
+    try {
+      const response = await axios.post(`${API_URL}/register`, { email, password, name });
+      const { token, user: userData } = response.data;
+      
+      setUser(userData);
+      localStorage.setItem('archint_token', token);
+      localStorage.setItem('archint_user', JSON.stringify(userData));
+      return true;
+    } catch (error) {
+      console.error('Registration Error:', error);
+      return false;
+    }
   }, []);
 
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('archint_user');
+    localStorage.removeItem('archint_token');
   }, []);
 
   return (
